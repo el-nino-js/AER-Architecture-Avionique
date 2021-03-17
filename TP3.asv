@@ -15,12 +15,10 @@
 %  DATE DE CRÉATION : 17 MARS 2021. MODIFIE 31 OCT 2018               *
 %**********************************************************************
 
-clear;
+clear all;
 clc;
 
 disp('ICD')
 
-[n, m]=ILS();
-disp(n);
-disp(m);
+[n, m
 
