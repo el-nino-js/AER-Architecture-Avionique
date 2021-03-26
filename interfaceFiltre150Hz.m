@@ -14,5 +14,6 @@ fs = 1500; % taux d'echantillonage du signal (Hz)
 margeMin = fpass - (fpass * marge);
 margeMax = fpass + (fpass * marge);
 signalFiltre = bandpass(signal, [margeMin, margeMax], fs);
+plot(signalFiltre);
 end
 

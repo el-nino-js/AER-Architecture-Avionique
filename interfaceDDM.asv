@@ -5,14 +5,14 @@ function [ddm,deviation] = interfaceDDM(amplitude90Hz, amplitude150Hz)
 % d'atterissage ainsi que la deviation
 
 % Entrés:
-%   amplitude90Hz: Pourcentage d'amplitude d'un signal modulée à 90 Hz 
-%   amplitude150Hz: Pourcentage d'amplitude d'un signal modulée à 150 Hz  
+%   amplitude90Hz: Pourcentage d'amplitude d'un signal modulée à 90 Hz
+%   [double]
+%   amplitude150Hz: Pourcentage d'amplitude d'un signal modulée à 150 Hz [double] 
 %
 % Sortie:
-%   ddm: signal d'écart entre les deux ondes porteuses
-%   deviation: deviation de l'avion (negative, positive)
+%   ddm: signal d'écart entre les deux ondes porteuses [double]
+%   deviation: deviation de l'avion [string]
     ddm = amplitude90Hz - amplitude150Hz;
-    
     deviation = calculerDeviation(ddm);
 end
 
@@ -20,19 +20,33 @@ function deviation = calculerDeviation(ddm)
         %% calculerDeviationAvion
         % Calcul la deviation possible de l'avion dependamment de la valeur
         % DDM
-
         % Entrés:
-        %   ddm: difference de profondeur de modulation  
+        %   ddm: difference de profondeur de modulation [double]
         %
         % Sortie:
-        %   deviation: deviation de l'avion (centre, gauche, droite)
+        %   deviation: deviation de l'avion [string]
         if (ddm == 0)
-            deviation = "centre";
+            deviation = "nulle";
         elseif (ddm < 0)
-            deviation = "gauche";
+            deviation = "negative";
         elseif (ddm > 0)
-            deviation = "droite";
+            deviation = "positive";
         else
             deviation = "invalide";
         end
 end
+
+function indiceDeModulation = modulerSignal(signal)
+        %% modulerSignal
+        % Module les amplitudes d'un signal pour en extraire l'indice de
+        % modulation
+        % Entrés:
+        %   signal: signal filtré à 90 Hz ou 150 Hz avec un sampling rate
+        %   de 1500 Hz
+        %
+        % Sortie:
+        %   indiceDeModulation: Indice de modulation du signal
+        fs = 1500; %tauc
+        maxima = findpeaks(signal,fs);
+end
+
