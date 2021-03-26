@@ -3,11 +3,11 @@ function signalFiltre = interfaceFiltre90Hz(signal,marge)
 % Filtre passe-bande ne laissant passer qu'une frequence de 90 Hz
 
 % Entrés:
-%   signal: vecteur de signal echantillonné à une fréquence de 1500Hz
-%   marge: pourcentage de marge permise au signal filtré
+%   signal: signal echantillonné à une fréquence de 1500Hz [vector]
+%   marge: pourcentage de marge permise au signal filtré [double]
 %
 % Sortie:
-%   ddm: vecteur de signal filtré à 90 Hz
+%   ddm: signal filtré à 90 Hz [vector]
 fpass = 90; % frequence de la bande passante du signal (Hz)
 fs = 1500; % taux d'echantillonage du signal (Hz)
 margeMin = fpass - (fpass * marge);

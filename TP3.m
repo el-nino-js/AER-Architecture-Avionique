@@ -29,6 +29,5 @@ x = [2 1 2]*sin(2*pi*[50 150 250]'.*t) + randn(size(t))/10;
 marge = 0.1;
 
 z = interfaceFiltre90Hz(x,marge);
-y = interfaceFiltre150Hz(x,marge);
+[y,r] = interfaceDDM(2,3);
 
-plot(z);
