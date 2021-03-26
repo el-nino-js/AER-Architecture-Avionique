@@ -21,6 +21,14 @@ clc;
 disp('ICD')
 
 [n,p] = interfaceDDM(22,53);
-disp(n);
-disp(p);
 
+fs = 1e3;t = 0:1/fs:1;
+x = [2 1 2]*sin(2*pi*[50 150 250]'.*t) + randn(size(t))/10;
+
+
+marge = 0.1;
+
+z = interfaceFiltre90Hz(x,marge);
+y = interfaceFiltre150Hz(x,marge);
+
+plot(z);

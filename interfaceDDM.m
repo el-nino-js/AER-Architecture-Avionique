@@ -1,5 +1,5 @@
 function [ddm,position] = interfaceDDM(amplitude90Hz, amplitude150Hz)
-%% calculer.m
+%% interfaceDDM.m
 % Calcul la différence de profondeur de modulation (ddm) de deux pourcentage d'amplitudes de signals
 % modulés de 90Hz et 150Hz localisées sur la ligne médiane d'une piste d'atterissage
 
