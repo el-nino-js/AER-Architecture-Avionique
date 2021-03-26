@@ -15,10 +15,11 @@
 %  DATE DE CRÉATION : 17 MARS 2021. MODIFIE 31 OCT 2018               *
 %**********************************************************************
 
-clear all;
+clear;
 clc;
 
 disp('ICD')
 
-[n, m
+n = interfaceDDM;
+disp(np);
 

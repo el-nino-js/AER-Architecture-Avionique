@@ -20,7 +20,7 @@ clc;
 
 disp('ICD')
 
-[n, m]=ILS();
+[n,p] = interfaceDDM(22,53);
 disp(n);
-disp(m);
+disp(p);
 
