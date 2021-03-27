@@ -20,15 +20,20 @@ clc;
 
 disp('ICD');
 
-load("data5.mat");
+
+uv = importdata("data5.mat");
 
 
 
-fs = 1500;t = 0:1/fs:1;
+fs = 1500; t = 0:1/fs:1/30;
+ 
+x = 0.2*sin(2*pi*90'.*t)+ 0.2*sin(2*pi*150'.*t)+ 0.2*sin(2*pi*1090'.*t);
+array = [];
 
-x = sin(2*pi*30'.*t) + randn(size(t))/1000;
+plot(t,x);
+
 save('data5.mat','x');
-plot(x);
+
 
 marge = 0.2;
 y = interfaceFiltre150Hz(x,marge);

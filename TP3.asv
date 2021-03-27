@@ -15,23 +15,28 @@
 %  DATE DE CRÉATION : 17 MARS 2021. MODIFIE 31 OCT 2018               *
 %**********************************************************************
 
-clear;
+clear all;
 clc;
 
 disp('ICD');
 
-s = load("data3.mat");
+
+uv = importdata("data5.mat");
 
 
 
-fs = 1500;t = 0:1/fs:1;
+fs = 1500; t = 0:1/fs:1/30;
+ 
+x = 0.2sin(2*pi*90'.*t)+ 0.2sin(2*pi*150'.*t)+ 0.2sin(2*pi*90'.*t)+    ;
+array = [];
 
-x = sin(2*pi*30'.*t) + randn(size(t))/1000;
-save("data1.mat",x);
-plot(x);
+plot(t,x);
+
+save('data5.mat','x');
+
 
 marge = 0.2;
-y = interfaceFiltre150Hz(s.x,marge);
-z = interfaceFiltre90Hz(s.x,marge);
+y = interfaceFiltre150Hz(x,marge);
+z = interfaceFiltre90Hz(x,marge);
 u = interfaceDDM(y,z);
 disp(u);

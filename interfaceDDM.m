@@ -56,6 +56,7 @@ function h = modulerSignal(signal)
         % source: https://fr.wikipedia.org/wiki/Modulation_d%27amplitude#:~:text=La%20modulation%20d'amplitude%20ou,utilis%C3%A9e%20pour%20moduler%20un%20signal.
         vMin = min(maxima); %amplitude minimal du signal modulé
         vMax = max(maxima); %amplitude maximal du signal modulé
+       
         h = (vMax - vMin)/(vMax + vMin);
         disp (h);
 end
