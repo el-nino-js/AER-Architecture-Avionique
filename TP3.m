@@ -18,16 +18,19 @@
 clear;
 clc;
 
-disp('ICD')
+disp('ICD');
+
+u = load("data3.mat");
+x = u.children;
 
 
+fs = 1500;t = 0:1/fs:1;
 
-fs = 1e3;t = 0:1/fs:1;
-x = [2 1 2]*sin(2*pi*[50 150 250]'.*t) + randn(size(t))/10;
+x = sin(2*pi*30'.*t) + randn(size(t))/1000;
+plot(x);
 
 marge = 0.2;
-y = interfaceFiltre150Hz(x,marge);
-z = interfaceFiltre90Hz(x,marge);
-
-
-
+y = interfaceFiltre150Hz(u,marge);
+z = interfaceFiltre90Hz(u,marge);
+u = interfaceDDM(y,z);
+disp(u);
