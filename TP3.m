@@ -18,25 +18,14 @@
 clear all;
 clc;
 
-disp('ICD');
-
-
-uv = importdata("data5.mat");
 
 
 
-fs = 1500; t = 0:1/fs:1/30;
- 
-x = 0.2*sin(2*pi*90'.*t)+ 0.2*sin(2*pi*150'.*t)+ 0.2*sin(2*pi*1090'.*t);
-array = [];
-
-plot(t,x);
-
-save('data5.mat','x');
 
 
+uv = interfaceInput();
 marge = 0.2;
-y = interfaceFiltre150Hz(x,marge);
-z = interfaceFiltre90Hz(x,marge);
+y = interfaceFiltre150Hz(uv,marge);
+z = interfaceFiltre90Hz(uv,marge);
 u = interfaceDDM(y,z);
 disp(u);
