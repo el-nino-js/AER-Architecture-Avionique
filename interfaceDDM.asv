@@ -6,14 +6,13 @@ function [deviation,ddm] = interfaceDDM(h90, h150)
 
 % Entrés:
 %   h90: indice de modulation du signal filtre 90 Hz [double]
-%   h150: indice de modulation du signal filtre 150 Hz [double]
+%   h150: indice de modulation du signal filtre 90 Hz [double]
 %
 % Sortie:
 %   ddm: signal d'écart entre les deux ondes porteuses [double]
 %   deviation: deviation de l'avion [string]
-    disp(h90);
-    disp(h150);
-    ddm = h90 - h150;
+    
+    ddm = h90Hz - h150Hz;
     ddm = round(ddm,3,'significant'); % 3 chiffres significatifs
     ddm = single(ddm); % format single 32 bit;
     

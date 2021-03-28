@@ -21,11 +21,22 @@
 clear all;
 clc;
 
-[errorInput, data] = interfaceInput();
-[errorFilter90Hz, signal90Hz] = interfaceFiltre90Hz(data);
-[errorFilter150Hz, signal150Hz] = interfaceFiltre150Hz(data);
-[errorDdm,deviation,ddm] = interfaceDDM(signal90Hz, signal150Hz);
-flag = interfaceFlag(errorInput, errorFilter90Hz, errorFilter150Hz, errorDdm);
+% Génére un fichier de donnée data.mat
+% Ne pas remettre !
+% source: https://www.mathworks.com/help/signal/gs/waveform-generation-time-vectors-and-sinusoids-1.html
+
+clear all;
+clc;
+
+% transforme le tableau en single
+data1 = single(data);
+save('data.mat','data1');
+
+data = interfaceInput();
+h90 = interfaceFiltre90Hz(data);
+h150 = interfaceFiltre150Hz(data);
+[deviation,ddm] = interfaceDDM(h90, h150);
+flag = interfaceFlag(h90, h150);
 
 disp("ddm: " + ddm);
 disp("deviation: " + deviation);

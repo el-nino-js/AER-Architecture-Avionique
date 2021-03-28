@@ -4,13 +4,12 @@
 
 clear all;
 clc;
-
 freq = 30; 
 fs = 1500;
 t = 0:1/fs:1/freq;
 
-% ex: signal combiné de 90Hz, 150Hz et 1090Hz
-x = sin(2*pi*90'.*t)+ sin(2*pi*150'.*t)+ sin(2*pi*1090'.*t);
+% ex: signal combiné de 95Hz, 146Hz et 1100Hz
+x = sin(2*pi*95'.*t) + sin(2*pi*146'.*t)  + sin(2*pi*1110'.*t)  ;
 array = [];
 
 plot(t,x);

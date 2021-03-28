@@ -1,19 +1,19 @@
-function h150 = interfaceFiltre150Hz(signal)
-%% interfaceFiltre150HZ
-% filtre un signal à 150 Hz et retourne sont indice de modulation
+function h90 = interfaceFiltre90Hz(signal)
+%% interfaceFiltre90Hz.m
+% filtre un signal à 90 Hz et retourne sont indice de modulation
 % Entrés:
 %   signal: signal echantillonné à une fréquence de 1500Hz [vector]
 %
 % Sortie:
-%   h150: indice de modulation d'un signal 150Hz [double]æ
-    fpass = 150; % frequence de la bande passante du signal (Hz)
-    margin = 20; % marge du signal toléré de 20Hz
+%   h90: indice de modulation d'un signal 90Hz [double]æ
+    fpass = 90; % frequence de la bande passante du signal (Hz)
+    margin = 2; % marge du signal toléré de 20H
     fs = 1500; % taux d'echantillonage du signal (Hz)
 
     marginMin = fpass - margin; 
     marginMax = fpass + margin;
     signalFiltre = bandpass(signal, [marginMin, marginMax], fs);
-    h150 = moduleSignal(signalFiltre);
+    h90 = moduleSignal(signalFiltre);
 end
 
 function h = moduleSignal(signal)

@@ -1,21 +1,19 @@
-function [flag] = interfaceFlag(errorInput, errorFilter90Hz, errorFilter150Hz, errorDdm)
+function [flag] = interfaceFlag(h90, h150)
 %% interfaceFlag.m
 % Calcul un drapeau de validite en vérifiant qu'aucune erreur
 % n'a été retourné dans toutes les interface
 
 % Entrés:
-%   errorInput: Indique s'il y a présence d'erreur dans l'interface Input [bool]
-%   errorFilter90Hz: Indique s'il y a présence d'erreur dans l'interface de filtrage 90Hz [bool]
-%   errorFilter150Hz: Indique s'il y a présence d'erreur dans l'interface de filtrage 150Hz [bool]
-%   errorDdm: Indique s'il y a présence d'erreur dans l'interface du calcul DDM [bool]
+%   h90: indice de modulation du signal filtre 90 Hz [double]
+%   h150: indice de modulation du signal filtre 150 Hz [double]
 %
 % Sortie:
-%   flag : Drapeau de validation. Valide lorsque vrai [bool]
-    sum = errorInput + errorFilter90Hz + errorFilter150Hz + errorDdm;
-    if (sum == 0)
-        flag = true;
+%   flag : Drapeau de validation. Presence d'erreur lorsque vrai [bool]
+    sum = h90 + h150;
+    if (sum < 0.40)
+        flag = false;
     else
-        flag = false; 
+        flag = true; 
     
     end
     

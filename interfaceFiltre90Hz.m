@@ -1,27 +1,37 @@
-function [errorSignalFiltre, signalFiltre] = interfaceFiltre90Hz(signal)
+function h90 = interfaceFiltre90Hz(signal)
 %% interfaceFiltre90Hz.m
-% Filtre passe-bande ne laissant passer qu'une frequence de 90 Hz
-
+% filtre un signal à 90 Hz et retourne sont indice de modulation
 % Entrés:
 %   signal: signal echantillonné à une fréquence de 1500Hz [vector]
-%   marge: pourcentage de marge permise au signal filtré [double]
 %
 % Sortie:
-%   signalFiltre: signal filtré à 90 Hz [vector]
-%   errorSignalFiltre: indique la présence d'une erreur au niveau du
-%   filtrage 90 Hz lorsque vrai [bool]
-    errorSignalFiltre = true;
+%   h90: indice de modulation d'un signal 90Hz [double]æ
     fpass = 90; % frequence de la bande passante du signal (Hz)
+    margin = 20; % marge du signal toléré de 20H
     fs = 1500; % taux d'echantillonage du signal (Hz)
-    margin = 0.02; % marge de fréquence toléré
-    margeMin = fpass - (fpass * margin);
-    margeMax = fpass + (fpass * margin);
-    signalFiltre = bandpass(signal, [margeMin, margeMax], fs);
 
-    % Signal est nulle si le signal 90 Hz present apres le filtrage est
-    % manquant
-     if (any(signalFiltre))
-        errorSignalFiltre = false;
-    end
+    marginMin = fpass - margin; 
+    marginMax = fpass + margin;
+    signalFiltre = bandpass(signal, [marginMin, marginMax], fs);
+    h90 = moduleSignal(signalFiltre);
 end
 
+function h = moduleSignal(signal)
+        %% moduleSignal
+        % Module les amplitudes d'un signal pour en extraire l'indice de
+        % modulation (ou pourcentage d'amplitude)
+        % Entrés:
+        %   signal: signal filtré avec un sampling rate de 1500 Hz
+        %
+        % Sortie:
+        %   h: Indice de modulation du signal
+        fs = 1500; %taux d'échantillonnage
+        maxima = findpeaks(signal,fs); %retourne toutes les amplitudes
+        
+        %Calcul de l'indice de modulation 
+        % source: https://fr.wikipedia.org/wiki/Modulation_d%27amplitude#
+        vMin = min(maxima); %amplitude minimal du signal modulé
+        vMax = max(maxima); %amplitude maximal du signal modulé
+       
+        h = (vMax - vMin)/(vMax + vMin);
+end
