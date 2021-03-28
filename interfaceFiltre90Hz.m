@@ -1,4 +1,4 @@
-function signalFiltre = interfaceFiltre90Hz(signal,marge)
+function [errorSignalFiltre, signalFiltre] = interfaceFiltre90Hz(signal)
 %% interfaceFiltre90Hz.m
 % Filtre passe-bande ne laissant passer qu'une frequence de 90 Hz
 
@@ -7,11 +7,21 @@ function signalFiltre = interfaceFiltre90Hz(signal,marge)
 %   marge: pourcentage de marge permise au signal filtré [double]
 %
 % Sortie:
-%   ddm: signal filtré à 90 Hz [vector]
-fpass = 90; % frequence de la bande passante du signal (Hz)
-fs = 1500; % taux d'echantillonage du signal (Hz)
-margeMin = fpass - (fpass * marge);
-margeMax = fpass + (fpass * marge);
-signalFiltre = bandpass(signal, [margeMin, margeMax], fs);
+%   signalFiltre: signal filtré à 90 Hz [vector]
+%   errorSignalFiltre: indique la présence d'une erreur au niveau du
+%   filtrage 90 Hz lorsque vrai [bool]
+    errorSignalFiltre = true;
+    fpass = 90; % frequence de la bande passante du signal (Hz)
+    fs = 1500; % taux d'echantillonage du signal (Hz)
+    margin = 0.02; % marge de fréquence toléré
+    margeMin = fpass - (fpass * margin);
+    margeMax = fpass + (fpass * margin);
+    signalFiltre = bandpass(signal, [margeMin, margeMax], fs);
+
+    % Signal est nulle si le signal 90 Hz present apres le filtrage est
+    % manquant
+     if (any(signalFiltre))
+        errorSignalFiltre = false;
+    end
 end
 

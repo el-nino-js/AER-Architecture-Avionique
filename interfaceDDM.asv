@@ -1,4 +1,4 @@
-function [errorDdm,deviation,ddm] = interfaceDDM(signal90Hz, signal150Hz)
+function [errorDdm,deviation] = interfaceDDM(signal90Hz, signal150Hz)
 %% interfaceDDM.m
 % Calcul la différence de profondeur de modulation (ddm) de deux signals
 % modulés de 90Hz et 150Hz localisées sur la ligne médiane d'une piste
@@ -13,12 +13,11 @@ function [errorDdm,deviation,ddm] = interfaceDDM(signal90Hz, signal150Hz)
 %   errorddm: indique la presence d'erreur de la valeur ddm [bool]
 %   ddm: signal d'écart entre les deux ondes porteuses [double]
 %   deviation: deviation de l'avion [string]
+    errorDdm = true;
     amplitude90Hz = moduleSignal(signal90Hz);
     amplitude150Hz = moduleSignal(signal150Hz);
     ddm = amplitude90Hz - amplitude150Hz;
     deviation = calculateDeviation(ddm);
-    errorDdm = findErrorDdm(amplitude90Hz, amplitude150Hz, ddm);
-    disp(ddm);
 end
 
 function deviation = calculateDeviation(ddm)
@@ -74,15 +73,5 @@ function errorDdm = findErrorDdm(amplitudeA, amplitudeB, ddm)
         % Sortie:
         %   errorDdm: indique la présence d'une erreur dans le calcul de ddm lorsque vrai [bool]
         errorDdm = true;
-        
-        amplitudeAThreshold = 1 - amplitudeA;
-        amplitudeBThreshold = 1 - amplitudeB;
-        ddmSensibility = 0.15;
-        
-        % Indice de modulation > 70% de la valeur nominale
-        % Perte de sensibilité : ddm < 0.15
-        if ((amplitudeAThreshold > 0.70) && (amplitudeBThreshold > 0.70) && (abs(ddm)<ddmSensibility))
-            errorDdm = false;
-        end
-        
+        ampAThreshold = 1 - amplitudeA
 end

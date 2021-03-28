@@ -1,6 +1,6 @@
 fs = 1500; t = 0:1/fs:1/30;
  
-x = sin(2*pi*90'.*t)+ sin(2*pi*150'.*t)+ sin(2*pi*1090'.*t);
+x = 0.2*sin(2*pi*90'.*t)+ 0.2*sin(2*pi*150'.*t);
 array = [];
 
 plot(t,x);

@@ -8,7 +8,7 @@
 %                   - LA NAV VERTICALE DU VOL (2D)                    *
 %                   - LA NAV COMPLÈTE (3D)                            *
 %**********************************************************************
-% FICHIER *.CSV REQUIS DANS LE MÊME DOSSIER                           *
+% FICHIER data.mat REQUIS DANS LE MÊME DOSSIER                           *
 %**********************************************************************
 %  AUTEUR : Nuno Silva-Pinto                                              *
 %**********************************************************************
@@ -18,14 +18,8 @@
 clear all;
 clc;
 
-
-
-
-
-
-uv = interfaceInput();
-marge = 0.2;
-y = interfaceFiltre150Hz(uv,marge);
-z = interfaceFiltre90Hz(uv,marge);
-u = interfaceDDM(y,z);
-disp(u);
+[errorInput, data] = interfaceInput();
+[errorFilter90Hz, signal90Hz] = interfaceFiltre90Hz(data);
+[errorFilter150Hz, signal150Hz] = interfaceFiltre150Hz(data);
+[errorDdm,deviation,ddm] = interfaceDDM(signal90Hz, signal150Hz);
+flag = interfaceFlag(errorInput, errorFilter90Hz, errorFilter150Hz,errorDdm);

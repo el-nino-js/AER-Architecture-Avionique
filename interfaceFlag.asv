@@ -1,13 +1,10 @@
-function [errorDdm,deviation,ddm] = interfaceDDM(signal90Hz, signal150Hz)
+function [errorInput, errorFilter90Hz, errorFilter150Hz, errorDdm] = interfaceDDM(signal90Hz, signal150Hz)
 %% interfaceDDM.m
-% Calcul la différence de profondeur de modulation (ddm) de deux signals
-% modulés de 90Hz et 150Hz localisées sur la ligne médiane d'une piste
-% d'atterissage ainsi que la deviation de l'avion
+% Calcul un drapeau de validite en vérifiant qu'aucune erreur
+% n'a été retourné dans chacune des interface
 
 % Entrés:
-%   amplitude90Hz: signal modulée à 90 Hz
-%   [double]
-%   amplitude150Hz: signal modulée à 150 Hz [double] 
+¢
 %
 % Sortie:
 %   errorddm: indique la presence d'erreur de la valeur ddm [bool]
