@@ -22,7 +22,7 @@ clc;
 [errorFilter90Hz, signal90Hz] = interfaceFiltre90Hz(data);
 [errorFilter150Hz, signal150Hz] = interfaceFiltre150Hz(data);
 [errorDdm,deviation,ddm] = interfaceDDM(signal90Hz, signal150Hz);
-flag = interfaceFlag(errorInput, errorFilter90Hz, errorFilter150Hz,errorDdm);
+flag = interfaceFlag(errorInput, errorFilter90Hz, errorFilter150Hz, errorDdm);
 
 disp("ddm: " + ddm);
 disp("deviation: " + deviation);

@@ -24,10 +24,15 @@ function [errorDdm,deviation,ddm] = interfaceDDM(signal90Hz, signal150Hz)
     errorDdm = findErrorDdm(amplitude90Hz, amplitude150Hz, ddm);
     
     %sauvegarde ddm dans le fichier ascii 'ddm.txt'
-    ddmAscii = int2str(ddm);
-    save('ddm.txt','ddmAscii', '-ascii');
-    type('ddm.txt');
+    ddmAscii = num2str(ddm);
+    fid = fopen('ddm.txt','wt');
+    fprintf(fid, ddmAscii);
+    fclose(fid);
     
+    %sauvegarde deviation dans le fichier 'deviation.txt';
+    fid = fopen('deviation.txt','wt');
+    fprintf(fid, deviation);
+    fclose(fid);
 
 end
 
@@ -68,7 +73,6 @@ function h = moduleSignal(signal)
         vMax = max(maxima); %amplitude maximal du signal modulé
        
         h = (vMax - vMin)/(vMax + vMin);
-        disp (h);
 end
 
 function errorDdm = findErrorDdm(amplitudeA, amplitudeB, ddm)

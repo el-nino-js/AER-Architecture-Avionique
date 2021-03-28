@@ -21,8 +21,9 @@ function [flag] = interfaceFlag(errorInput, errorFilter90Hz, errorFilter150Hz, e
     
     % sauvegarde flag dans un format ascii sur fichier 'flag.txt'
     f = int2str(int8(flag));
-    save('flag.txt','f', '-ascii');
-    type('flag.txt');
+    fid = fopen('flag.txt','wt');
+    fprintf(fid, f);
+    fclose(fid);
 end
 
 
