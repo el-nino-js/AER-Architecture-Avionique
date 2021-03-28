@@ -18,7 +18,7 @@ function [errorSignalFiltre, signalFiltre] = interfaceFiltre150Hz(signal)
     margeMax = fpass + (fpass * margin);
     signalFiltre = bandpass(signal, [margeMin, margeMax], fs);
 
-    % Signal est nulle si le signal 150 Hz present apres le 
+    % Le signal est nulle si le signal 150 Hz present apres le 
     % filtrage est manquant
     if (any(signalFiltre))
         errorSignalFiltre = false;

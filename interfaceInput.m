@@ -7,18 +7,18 @@ function [errorInput, data] = interfaceInput()
 %   errorInput: indique la presence d'une erreur d'input lorsque vrai (bool)
 %   data: signal recu [single array 1x51]
 errorInput = true;
-if isfile("data.mat")
-     % Fichier existe.
-     data = importdata("data.mat");
-     
-     % Fichier est un tableau de cinquante valeurs décimales de simple précision (32 bits).
-     if (isa(data, "single") && ~isequal(size(data), [51 1]))
-        plot(data);
-        errorInput = false;
-     end
-else
-     data = zeros([51,x]); % signal vide renvoye
-end
+    if isfile("data.mat")
+         % Fichier data.mat existe.
+         data = importdata("data.mat");
+
+         % Fichier doit etre un tableau de cinquante valeurs décimales de simple précision (32 bits).
+         if (isa(data, "single") && ~isequal(size(data), [51 1]))
+            plot(data);
+            errorInput = false;
+         end
+    else
+         data = zeros([51,x]); % signal vide renvoye
+    end
 
 end
 
