@@ -1,85 +1,33 @@
-function [errorInput, errorFilter90Hz, errorFilter150Hz, errorDdm] = interfaceDDM(signal90Hz, signal150Hz)
-%% interfaceDDM.m
+function [flag] = interfaceFlag(errorInput, errorFilter90Hz, errorFilter150Hz, errorDdm)
+%% interfaceFlag.m
 % Calcul un drapeau de validite en vérifiant qu'aucune erreur
-% n'a été retourné dans chacune des interface
+% n'a été retourné dans toutes les interface
 
 % Entrés:
-¢
+%   errorInput: Indique s'il y a présence d'erreur dans l'interface Input [bool]
+%   errorFilter90Hz: Indique s'il y a présence d'erreur dans l'interface de filtrage 90Hz [bool]
+%   errorFilter150Hz: Indique s'il y a présence d'erreur dans l'interface de filtrage 150Hz [bool]
+%   errorDdm: Indique s'il y a présence d'erreur dans l'interface du calcul DDM [bool]
 %
 % Sortie:
-%   errorddm: indique la presence d'erreur de la valeur ddm [bool]
-%   ddm: signal d'écart entre les deux ondes porteuses [double]
-%   deviation: deviation de l'avion [string]
-    amplitude90Hz = moduleSignal(signal90Hz);
-    amplitude150Hz = moduleSignal(signal150Hz);
-    ddm = amplitude90Hz - amplitude150Hz;
-    deviation = calculateDeviation(ddm);
-    errorDdm = findErrorDdm(amplitude90Hz, amplitude150Hz, ddm);
-    disp(ddm);
+%   flag : Drapeau de validation. Valide lorsque vrai [bool]
+    disp(errorInput);
+    disp(errorFilter90Hz);
+    disp(errorDdm);
+    sum = errorInput + errorFilter90Hz + errorFilter150Hz + errorDdm;
+    if (sum == 0)
+        flag = true;
+    else
+        flag = false; 
+    
+    end
+    
+    f = int2str(int8(flag));
+    dis
+    save('flag.txt','f', '-ascii');
+    type('flag.txt')
+    
+    
 end
 
-function deviation = calculateDeviation(ddm)
-        %% calculateDeviationAvion
-        % Calcul la deviation possible de l'avion dependamment de la valeur
-        % DDM
-        % Entrés:
-        %   ddm: difference de profondeur de modulation [double]
-        %
-        % Sortie:
-        %   deviation: deviation de l'avion [string]
-        if (ddm == 0)
-            deviation = "nul";
-        elseif (ddm < 0)
-            deviation = "negative";
-        elseif (ddm > 0)
-            deviation = "positive";
-        else
-            deviation = "invalid";
-        end
-end
 
-function h = moduleSignal(signal)
-        %% moduleSignal
-        % Module les amplitudes d'un signal pour en extraire l'indice de
-        % modulation (ou pourcentage d'amplitude)
-        % Entrés:
-        %   signal: signal filtré à 90 Hz ou 150 Hz avec un sampling rate
-        %   de 1500 Hz
-        %
-        % Sortie:
-        %   h: Indice de modulation du signal
-        fs = 1500; %taux d'échantillonnage
-        maxima = findpeaks(signal,fs); %retourne toutes les amplitudes
-        
-        %Calcul de l'indice de modulation 
-        % source: https://fr.wikipedia.org/wiki/Modulation_d%27amplitude#:~:text=La%20modulation%20d'amplitude%20ou,utilis%C3%A9e%20pour%20moduler%20un%20signal.
-        vMin = min(maxima); %amplitude minimal du signal modulé
-        vMax = max(maxima); %amplitude maximal du signal modulé
-       
-        h = (vMax - vMin)/(vMax + vMin);
-        disp (h);
-end
-
-function errorDdm = findErrorDdm(amplitudeA, amplitudeB, ddm)
-        %% findErrorDdm
-        % Determine si les valeur de modulation et de ddm respecte leur seuil
-        % Entrés:
-        %   amplitudeA: Indice de modulation [double]
-        %   amplitudeB: Indice de modulation [double]
-        %   ddm: signal d'ecart entre les deux ondes porteuses [double]
-        %
-        % Sortie:
-        %   errorDdm: indique la présence d'une erreur dans le calcul de ddm lorsque vrai [bool]
-        errorDdm = true;
-        
-        amplitudeAThreshold = 1 - amplitudeA;
-        amplitudeBThreshold = 1 - amplitudeB;
-        ddmSensibility = 0.15;
-        
-        % Indice de modulation > 70% de la valeur nominale
-        % Perte de sensibilité : ddm < 0.15
-        if ((amplitudeAThreshold > 0.70) && (amplitudeBThreshold > 0.70) && (abs(ddm)<ddmSensibility))
-            errorDdm = false;
-        end
-        
-end

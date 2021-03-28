@@ -5,20 +5,30 @@ function [errorDdm,deviation,ddm] = interfaceDDM(signal90Hz, signal150Hz)
 % d'atterissage ainsi que la deviation de l'avion
 
 % Entrés:
-%   amplitude90Hz: signal modulée à 90 Hz
-%   [double]
+%   amplitude90Hz: signal modulée à 90 Hz [double]
 %   amplitude150Hz: signal modulée à 150 Hz [double] 
 %
 % Sortie:
 %   errorddm: indique la presence d'erreur de la valeur ddm [bool]
 %   ddm: signal d'écart entre les deux ondes porteuses [double]
-%   deviation: deviation de l'avion [string]
+%        deviation: deviation de l'avion [string]
+
     amplitude90Hz = moduleSignal(signal90Hz);
     amplitude150Hz = moduleSignal(signal150Hz);
+    
     ddm = amplitude90Hz - amplitude150Hz;
+    ddm = round(ddm,3,'significant'); % 3 chiffres significatifs
+    ddm = single(ddm); % format single 32 bit;
+    
     deviation = calculateDeviation(ddm);
     errorDdm = findErrorDdm(amplitude90Hz, amplitude150Hz, ddm);
-    disp(ddm);
+    
+    %sauvegarde ddm dans le fichier ascii 'ddm.txt'
+    ddmAscii = int2str(ddm);
+    save('ddm.txt','ddmAscii', '-ascii');
+    type('ddm.txt');
+    
+
 end
 
 function deviation = calculateDeviation(ddm)
@@ -34,10 +44,8 @@ function deviation = calculateDeviation(ddm)
             deviation = "nul";
         elseif (ddm < 0)
             deviation = "negative";
-        elseif (ddm > 0)
-            deviation = "positive";
         else
-            deviation = "invalid";
+            deviation = "positive";
         end
 end
 

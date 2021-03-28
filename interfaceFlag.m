@@ -11,9 +11,6 @@ function [flag] = interfaceFlag(errorInput, errorFilter90Hz, errorFilter150Hz, e
 %
 % Sortie:
 %   flag : Drapeau de validation. Valide lorsque vrai [bool]
-    disp(errorInput);
-    disp(errorFilter90Hz);
-    disp(errorDdm);
     sum = errorInput + errorFilter90Hz + errorFilter150Hz + errorDdm;
     if (sum == 0)
         flag = true;
@@ -21,5 +18,11 @@ function [flag] = interfaceFlag(errorInput, errorFilter90Hz, errorFilter150Hz, e
         flag = false; 
     
     end
-    disp(flag);
+    
+    % sauvegarde flag dans un format ascii sur fichier 'flag.txt'
+    f = int2str(int8(flag));
+    save('flag.txt','f', '-ascii');
+    type('flag.txt');
 end
+
+

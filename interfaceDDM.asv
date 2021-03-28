@@ -1,23 +1,34 @@
-function [errorDdm,deviation] = interfaceDDM(signal90Hz, signal150Hz)
+function [errorDdm,deviation,ddm] = interfaceDDM(signal90Hz, signal150Hz)
 %% interfaceDDM.m
 % Calcul la différence de profondeur de modulation (ddm) de deux signals
 % modulés de 90Hz et 150Hz localisées sur la ligne médiane d'une piste
 % d'atterissage ainsi que la deviation de l'avion
 
 % Entrés:
-%   amplitude90Hz: signal modulée à 90 Hz
-%   [double]
+%   amplitude90Hz: signal modulée à 90 Hz [double]
 %   amplitude150Hz: signal modulée à 150 Hz [double] 
 %
 % Sortie:
 %   errorddm: indique la presence d'erreur de la valeur ddm [bool]
 %   ddm: signal d'écart entre les deux ondes porteuses [double]
-%   deviation: deviation de l'avion [string]
-    errorDdm = true;
+%        deviation: deviation de l'avion [string]
+
     amplitude90Hz = moduleSignal(signal90Hz);
     amplitude150Hz = moduleSignal(signal150Hz);
+    
     ddm = amplitude90Hz - amplitude150Hz;
     deviation = calculateDeviation(ddm);
+    errorDdm = findErrorDdm(amplitude90Hz, amplitude150Hz, ddm);
+    
+    %sauvegarde ddm dans le fichier ascii 'ddm.txt'
+    ddm = round(ddm,3,'significant'); % 3 chiffres significatifs
+    ddm = single(ddm); % format single 32 bit;
+    ddmAscii = int2str(single(flag));
+    save('flag.txt','f', '-ascii');
+    type('flag.txt');
+    
+    
+
 end
 
 function deviation = calculateDeviation(ddm)
@@ -73,5 +84,15 @@ function errorDdm = findErrorDdm(amplitudeA, amplitudeB, ddm)
         % Sortie:
         %   errorDdm: indique la présence d'une erreur dans le calcul de ddm lorsque vrai [bool]
         errorDdm = true;
-        ampAThreshold = 1 - amplitudeA
+        
+        amplitudeAThreshold = 1 - amplitudeA;
+        amplitudeBThreshold = 1 - amplitudeB;
+        ddmSensibility = 0.15;
+        
+        % Indice de modulation > 70% de la valeur nominale
+        % Perte de sensibilité : ddm < 0.15
+        if ((amplitudeAThreshold > 0.70) && (amplitudeBThreshold > 0.70) && (abs(ddm)<ddmSensibility))
+            errorDdm = false;
+        end
+        
 end
