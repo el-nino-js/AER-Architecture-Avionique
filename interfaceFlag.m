@@ -9,12 +9,18 @@ function [flag] = interfaceFlag(h90, h150)
 %
 % Sortie:
 %   flag : Drapeau de validation. Presence d'erreur lorsque vrai [bool]
+
+    % Un sommation > 0.40 peut etre cause par plusieurs problenes
+    %   - Aucune fréquence radio détectée  
+    %   - Les fréquences 150Hz et 90Hz sont manquantes  
+    %   - La profondeur de modulation<70% de la valeur nominale  
+    %   - Perte de sensibilité  
+    %   - Erreur BIT (Built-in test) 
     sum = h90 + h150;
     if (sum < 0.40)
         flag = false;
     else
         flag = true; 
-    
     end
     
     % sauvegarde flag dans un format ascii sur fichier 'flag.txt'
