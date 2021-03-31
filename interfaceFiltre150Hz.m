@@ -1,37 +1,30 @@
-function h150 = interfaceFiltre150Hz(signal)
-%% interfaceFiltre150HZ
+function amp150 = interfaceFiltre150Hz(signal)
+%% interfaceFiltre150Hz.m
 % filtre un signal à 150 Hz et retourne sont indice de modulation
 % Entrés:
 %   signal: signal echantillonné à une fréquence de 1500Hz [vector]
 %
 % Sortie:
-%   h150: indice de modulation d'un signal 150Hz [double]æ
-    fpass = 150; % frequence de la bande passante du signal (Hz)
-    margin = 20; % marge du signal toléré de 20Hz
-    fs = 1500; % taux d'echantillonage du signal (Hz)
+%   amp150: Amplitude du signal filtré à 150Hz [double]
 
-    marginMin = fpass - margin; 
-    marginMax = fpass + margin;
-    signalFiltre = bandpass(signal, [marginMin, marginMax], fs);
-    h150 = moduleSignal(signalFiltre);
-end
+    % Fonction de filtre passe-bande à 150Hz réaliser sous FilterDesign 
+    Fs = 1500;  % Sampling Frequency
 
-function h = moduleSignal(signal)
-        %% moduleSignal
-        % Module les amplitudes d'un signal pour en extraire l'indice de
-        % modulation (ou pourcentage d'amplitude)
-        % Entrés:
-        %   signal: signal filtré avec un sampling rate de 1500 Hz
-        %
-        % Sortie:
-        %   h: Indice de modulation du signal
-        fs = 1500; %taux d'échantillonnage
-        maxima = findpeaks(signal,fs); %retourne toutes les amplitudes
-        
-        %Calcul de l'indice de modulation 
-        % source: https://fr.wikipedia.org/wiki/Modulation_d%27amplitude#
-        vMin = min(maxima); %amplitude minimal du signal modulé
-        vMax = max(maxima); %amplitude maximal du signal modulé
-       
-        h = (vMax - vMin)/(vMax + vMin);
+    N      = 200;  % Order
+    Fstop1 = 140;   % First Stopband Frequency;
+    Fpass1 = 146;   % First Passband Frequency
+    Fpass2 = 154;   % Second Passband Frequency
+    Fstop2 = 160;  % Second Stopband Frequency;
+    Wstop1 = 1;    % First Stopband Weight
+    Wpass  = 1;    % Passband Weight
+    Wstop2 = 1;    % Second Stopband Weight
+    dens   = 50;   % Density Factor
+
+    % Calculate the coefficients using the FIRPM function.
+    b  = firpm(N, [0 Fstop1 Fpass1 Fpass2 Fstop2 Fs/2]/(Fs/2), [0 0 1 1 0 ...
+               0], [Wstop1 Wpass Wstop2], {dens});
+    Hd = dfilt.dffir(b);
+    
+    signal150 = filter(b,1,signal);  % Signal filtre a 150Hz
+    amp150 = peak2peak(signal150)/2; % Amplitude du signal à 150Hz
 end

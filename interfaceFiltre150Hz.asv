@@ -1,11 +1,11 @@
-function amp90 = interfaceFiltre90Hz(signal)
-%% interfaceFiltre90Hz.m
-% filtre un signal à 90 Hz et retourne sont amplitude de modulation
+function signal150 = interfaceFiltre150Hz(signal)
+%% interfaceFiltre150Hz.m
+% filtre un signal à 90 Hz et retourne sont indice de modulation
 % Entrés:
 %   signal: signal echantillonné à une fréquence de 1500Hz [vector]
 %
 % Sortie:
-%   amp90: Amplitude du signal filtre à 90Hz [double]
+%   h90: indice de modulation d'un signal 90Hz [double]
 
     % Fonction de filtre passe-bande à 90Hz réaliser sous FilterDesign 
     Fs = 1500;  % Sampling Frequency
@@ -24,8 +24,4 @@ function amp90 = interfaceFiltre90Hz(signal)
     b  = firpm(N, [0 Fstop1 Fpass1 Fpass2 Fstop2 Fs/2]/(Fs/2), [0 0 1 1 0 ...
                0], [Wstop1 Wpass Wstop2], {dens});
     Hd = dfilt.dffir(b);
-    
-    signal90 = filter(b,1,signal); % Signal filtre a 90Hz
-    amp90 = peak2peak(signal90)/2; % Amplitude du signal à 90Hz
-  
 end

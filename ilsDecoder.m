@@ -15,18 +15,25 @@
 %  AUTEUR : Nuno Silva-Pinto                                          *
 %  REVU PAR: *ENTRER NOM*                                             *  
 %**********************************************************************
-%  DATE DE CRÉATION : 27 MARS 2021. MODIFIE 28 OCT 2018               *
+%  DATE DE CRÉATION : 27 MARS 2021. MODIFIE 31 MARS 2021              *
 %**********************************************************************
 
 clear all;
 clc;
 
-% transforme le tableau en single
-data = interfaceInput();
-h90 = interfaceFiltre90Hz(data);
-h150 = interfaceFiltre150Hz(data);
-[deviation,ddm] = interfaceDDM(h90, h150);
-flag = interfaceFlag(h90, h150);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Génére un fichier de donnée data.mat
+% Ne pas remettre !
+% source: https://www.mathworks.com/help/signal/gs/waveform-generation-time-vectors-and-sinusoids-1.html
+
+clear all;
+clc;
+
+[signal, m] = interfaceInput();
+amp90 = interfaceFiltre90Hz(signal);
+amp150 = interfaceFiltre150Hz(signal);
+[deviation,ddm] = interfaceDDM(amp90, amp150);
+flag = interfaceFlag(amp90, amp150, m);
 
 disp("ddm: " + ddm);
 disp("deviation: " + deviation);
