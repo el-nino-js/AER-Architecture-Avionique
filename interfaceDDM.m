@@ -40,11 +40,11 @@ function deviation = calculateDeviation(ddm)
         % Sortie:
         %   deviation: deviation de l'avion [string]
         if (ddm > -0.0155 && ddm < 0.0155)
-            deviation = "centré";
+            deviation = "centré"; % 90Hz = 150Hz : L'avion est sur l'axe d'approche
         elseif (ddm < -0.0155)
-            deviation = "gauche";
+            deviation = "gauche"; % 90Hz > 150Hz: L'avion est à gauche de l'axe d'approche
         else
-            deviation = "droite";
+            deviation = "droite"; % 90Hz < 150Hz: L'avion est à droite de l'axe d'approche
         end
 end
 
