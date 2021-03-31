@@ -11,8 +11,6 @@ function [deviation,ddm] = interfaceDDM(amp90, amp150)
 % Sortie:
 %   ddm: signal d'écart entre les deux ondes porteuses [double]
 %   deviation: deviation de l'avion [string]
-    disp(amp150);
-    disp(amp90);
     ddm = (amp150 - amp90)/(amp150 + amp90); % difference des pourcentage d'amplitude
     ddm = round(ddm,3,'significant');        % 3 chiffres significatifs
     ddm = single(ddm);                       % format single 32 bit;
