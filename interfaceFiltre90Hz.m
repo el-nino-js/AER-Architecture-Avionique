@@ -1,6 +1,6 @@
 function amp90 = interfaceFiltre90Hz(signal)
 %% interfaceFiltre90Hz.m
-% filtre un signal à 90 Hz et retourne sont amplitude de modulation
+% Filtre un signal à 90 Hz et retourne sont amplitude de modulation
 % Entrés:
 %   signal: signal echantillonné à une fréquence de 1500Hz [vector]
 %

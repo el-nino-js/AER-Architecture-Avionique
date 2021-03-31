@@ -1,29 +1,27 @@
-function [flag] = interfaceFlag(amp90, amp150, m)
+function [flag] = interfaceFlag(amp90, amp150)
 %% interfaceFlag.m
-% Calcul un drapeau de validite en vérifiant qu'aucune erreur
-% n'a été retourné dans toutes les interface. Un drapeau positif indique
+% Valide un drapeau de validite en vérifiant qu'aucune erreur
+% n'a été retourné. Un drapeau positif indique
 % la présence d'erreur
 
 % Entrés:
 %   amp90: amplitude du signal filtré à 90 Hz [double]
 %   amp150: amplitude du signal filtré à 150 Hz [double]
-%   m: signal de validation [double]
 %
 % Sortie:
 %   flag : Drapeau de validation. Presence d'erreur lorsque vrai [bool]
 
-    % Un sommation > 0.40 peut etre cause par plusieurs problenes
+    % Un sommation < 0.40 peut etre cause par plusieurs problenes
     %   - Aucune fréquence radio détectée  
     %   - Les fréquences 150Hz et 90Hz sont manquantes  
     %   - La profondeur de modulation<70% de la valeur nominale  
     %   - Perte de sensibilité  
     %   - Erreur BIT (Built-in test)
-    sum = m*((amp150 + amp90)/(amp150 + amp90)); % somme des differences de pourcentage d'amplitude
-disp(sum);
-    if (sum >= 0.4001)
-        flag = true;
-    else
+    sum = amp150 + amp90; % somme des differences de pourcentage d'amplitude
+    if (sum >= 0.4000)
         flag = false;
+    else
+        flag = true;
     end
     
     % sauvegarde flag dans un format ascii sur fichier 'flag.txt'

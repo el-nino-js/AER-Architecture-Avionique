@@ -1,8 +1,8 @@
 function [deviation,ddm] = interfaceDDM(amp90, amp150)
 %% interfaceDDM.m
-% Calcul la différence de profondeur de modulation (ddm) de deux signaux
+% Calcul la différence de profondeur de modulation (ddm) de deux signals
 % modulés de 90Hz et 150Hz localisées sur la ligne médiane d'une piste
-% d'atterissage ainsi que la déviation de l'avion
+% d'atterissage ainsi que la deviation de l'avion
 
 % Entrés:
 %   amp90: amplitude du signal filtré à 90 Hz [double]
@@ -11,8 +11,7 @@ function [deviation,ddm] = interfaceDDM(amp90, amp150)
 % Sortie:
 %   ddm: signal d'écart entre les deux ondes porteuses [double]
 %   deviation: deviation de l'avion [string]
-    disp(amp150);
-    disp(amp90);
+    disp(amp
     ddm = (amp150 - amp90)/(amp150 + amp90); % difference des pourcentage d'amplitude
     ddm = round(ddm,3,'significant');        % 3 chiffres significatifs
     ddm = single(ddm);                       % format single 32 bit;
