@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>ilsDecoder</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-03-31"><meta name="DC.source" content="ilsDecoder.m"><style type="text/css">
+      --><title>ilsDecoder.m  (Version C)</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-04-04"><meta name="DC.source" content="ilsDecoder.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -66,76 +66,59 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%**********************************************************************</span>
-<span class="comment">% NOM : ilsDecoder.m                                                  *</span>
-<span class="comment">% VERSION: B                                                          *</span>
-<span class="comment">%**********************************************************************</span>
-<span class="comment">% FONCTION : CE PROGRAMME LIT LE FICHIER data.mat &Eacute;TANT UN &Eacute;CHANTILLON*</span>
-<span class="comment">%            DE 50 POINTS D'UN SIGNAL MODUL&Eacute; DE 1500HZ &Agrave; UNE FR&Eacute;QUENCE*</span>
-<span class="comment">%            DE 30HZ. LE SIGNAL PASSE PAR UN D&Eacute;CODEUR ILS ET RETOURNE *</span>
-<span class="comment">%            EN SORTIE TROIS FICHIERS *.txt CONTENANT:                *</span>
-<span class="comment">%             1) ddm.txt: LA DDM (DIFFERENTIAL DEPTH OF MODULATION)   *</span>
-<span class="comment">%             2) deviation.txt: LA D&Eacute;VIATION DE L'AVION               *</span>
-<span class="comment">%             3) flag: LE DRAPEAU DE VALIDIT&Eacute;                         *</span>
-<span class="comment">%**********************************************************************</span>
-<span class="comment">% FICHIER data.mat REQUIS DANS LE M&Ecirc;ME DOSSIER                        *</span>
-<span class="comment">%**********************************************************************</span>
-<span class="comment">%  AUTEUR : NUNO SILVA-PINTO                                          *</span>
-<span class="comment">%  REVU PAR: EL MAHDI ERRIQ                                           *</span>
-<span class="comment">%**********************************************************************</span>
-<span class="comment">%  DATE DE CR&Eacute;ATION : 27 MARS 2021. MODIFIE 31 MARS 2021              *</span>
-<span class="comment">%**********************************************************************</span>
-
-clear <span class="string">all</span>;
+  </style></head><body><div class="content"><h1>ilsDecoder.m  (Version C)</h1><!--introduction--><p>Ce programme lit le fichier data.mat &eacute;tant un &eacute;chantillon de 50 points d'un signal modul&eacute; de 1500Hz &agrave; une fr&eacute;quence de 30Hz. Le signal passe par un d&eacute;codeur ILS et retourne en sortie trois fichiers *.txt contenant:</p><div><ol><li>ddm.txt: La DDM (Differential Depth of Modulation)</li><li>deviation.txt: La d&eacute;viation de l'avion</li><li>flag: Le drapeau de validit&eacute;</li></ol></div><p>Un fichier data.mat est requis dans le m&ecirc;me dossier.</p><p>Auteur : Nuno Silva-Pinto. Revu par: El Mahdi Erriq.</p><p>Date de cr&eacute;ation: 27 mars 2021. Modifi&eacute; le: 4 avril 2021.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Clear all previous commands</a></li><li><a href="#2">Interface d'entr&eacute;e</a></li><li><a href="#3">Interface du filtre 90Hz et 150Hz</a></li><li><a href="#4">Interface DDM</a></li><li><a href="#5">Interface du drapeau de validit&eacute;</a></li><li><a href="#6">Affichage</a></li></ul></div><h2 id="1">Clear all previous commands</h2><pre class="codeinput">clear <span class="string">all</span>;
 clc;
-
-signal = interfaceInput();
-amp90 = interfaceFiltre90Hz(signal);
+</pre><h2 id="2">Interface d'entr&eacute;e</h2><pre class="codeinput">signal = interfaceInput();
+</pre><img vspace="5" hspace="5" src="ilsDecoder_01.png" alt=""> <h2 id="3">Interface du filtre 90Hz et 150Hz</h2><pre class="codeinput">amp90 = interfaceFiltre90Hz(signal);
 amp150 = interfaceFiltre150Hz(signal);
-[deviation,ddm] = interfaceDDM(amp90, amp150);
-flag = interfaceFlag(amp90, amp150);
+</pre><pre class="codeoutput">    1.1005
 
-disp(<span class="string">"ddm: "</span> + ddm);
+</pre><h2 id="4">Interface DDM</h2><pre class="codeinput">[deviation,ddm] = interfaceDDM(amp90, amp150);
+</pre><h2 id="5">Interface du drapeau de validit&eacute;</h2><pre class="codeinput">flag = interfaceFlag(amp90, amp150);
+</pre><h2 id="6">Affichage</h2><pre class="codeinput">disp(<span class="string">"ddm: "</span> + ddm);
 disp(<span class="string">"deviation: "</span> + deviation);
 disp(<span class="string">"flag: "</span> + flag);
-</pre><pre class="codeoutput">    1.1656
-
-    1.1982
-
-ddm: -0.0138
+</pre><pre class="codeoutput">ddm: -0.0137
 deviation: centr&eacute;
 flag: false
-</pre><img vspace="5" hspace="5" src="ilsDecoder_01.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
-%**********************************************************************
-% NOM : ilsDecoder.m                                                  *
-% VERSION: B                                                          *
-%**********************************************************************
-% FONCTION : CE PROGRAMME LIT LE FICHIER data.mat ÉTANT UN ÉCHANTILLON*
-%            DE 50 POINTS D'UN SIGNAL MODULÉ DE 1500HZ À UNE FRÉQUENCE*
-%            DE 30HZ. LE SIGNAL PASSE PAR UN DÉCODEUR ILS ET RETOURNE *
-%            EN SORTIE TROIS FICHIERS *.txt CONTENANT:                *
-%             1) ddm.txt: LA DDM (DIFFERENTIAL DEPTH OF MODULATION)   *
-%             2) deviation.txt: LA DÉVIATION DE L'AVION               *
-%             3) flag: LE DRAPEAU DE VALIDITÉ                         *
-%**********************************************************************
-% FICHIER data.mat REQUIS DANS LE MÊME DOSSIER                        *
-%**********************************************************************
-%  AUTEUR : NUNO SILVA-PINTO                                          *
-%  REVU PAR: EL MAHDI ERRIQ                                           *  
-%**********************************************************************
-%  DATE DE CRÉATION : 27 MARS 2021. MODIFIE 31 MARS 2021              *
-%**********************************************************************
+%% ilsDecoder.m  (Version C)                                                      
+% Ce programme lit le fichier data.mat étant un échantillon
+% de 50 points d'un signal modulé de 1500Hz à une fréquence 
+% de 30Hz. Le signal passe par un décodeur ILS et retourne 
+% en sortie trois fichiers *.txt contenant: 
+%
+% #            ddm.txt: La DDM (Differential Depth of Modulation)   
+% #            deviation.txt: La déviation de l'avion               
+% #            flag: Le drapeau de validité
+%
+% Un fichier data.mat est requis dans le même dossier.
+%
+% Auteur : Nuno Silva-Pinto.      
+% Revu par: El Mahdi Erriq.
+%
+% Date de création: 27 mars 2021. 
+% Modifié le: 4 avril 2021.
 
+%% Clear all previous commands
 clear all;
 clc;
 
+%% Interface d'entrée
 signal = interfaceInput();
+
+%% Interface du filtre 90Hz et 150Hz
 amp90 = interfaceFiltre90Hz(signal);
 amp150 = interfaceFiltre150Hz(signal);
+
+%% Interface DDM
 [deviation,ddm] = interfaceDDM(amp90, amp150);
+
+%% Interface du drapeau de validité
 flag = interfaceFlag(amp90, amp150);
 
+%% Affichage
 disp("ddm: " + ddm);
 disp("deviation: " + deviation);
 disp("flag: " + flag);

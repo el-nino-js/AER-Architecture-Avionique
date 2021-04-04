@@ -1,6 +1,6 @@
 function [flag] = interfaceFlag(amp90, amp150)
 %% interfaceFlag.m
-% Valide un drapeau de validite en vérifiant qu'aucune erreur
+% Valide un drapeau de validité en vérifiant qu'aucune erreur
 % n'a été retourné. Un drapeau positif indique
 % la présence d'erreur
 

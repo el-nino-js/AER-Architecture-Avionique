@@ -27,5 +27,5 @@ function amp90 = interfaceFiltre90Hz(signal)
     
     signal90 = filter(b,1,signal); % Signal filtre a 90Hz
     amp90 = peak2peak(signal90)/2; % Amplitude du signal à 90Hz
-  
+  disp(amp90);
 end
