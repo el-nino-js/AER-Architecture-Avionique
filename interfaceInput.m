@@ -1,11 +1,12 @@
-function signal = interfaceInput()
+function data = interfaceInput()
 %% interfaceInput.m
 % Retourne le signal reçu representant 
 % 50 échantillons de 30Hz échantillonés à 1500Hz 
 %
 % Sortie:
 %   data: signal recu [single array 1x51]
-    if isfile("data.mat")
+    filename = "data.mat";
+    if exist(filename, 'file')
          % Fichier data.mat existe.
          data = importdata("data.mat");
 
@@ -26,12 +27,5 @@ function signal = interfaceInput()
     title('Signal reçu échantillonné à 1500 Hz et exécuter à 30Hz ');
     xlabel('Temps')
     ylabel('Amplitude')
-
-    % Augmentation de la taille de l'échantillon de 30Hz envoyé en réplicant le signal 20 fois 
-    % On réduit ainsi l'imprécision 
-    for i = 1:20
-        signal(50*(i-1)+1:50*i) = data;  
-    end
-    
 end
 

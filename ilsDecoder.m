@@ -35,5 +35,6 @@ flag = interfaceFlag(amp90, amp150);
 
 %% Affichage
 disp("ddm: " + ddm);
-disp("deviation: " + deviation);
+dispDeviation = strcat("deviation: ",deviation);
+disp(dispDeviation);
 disp("flag: " + flag);

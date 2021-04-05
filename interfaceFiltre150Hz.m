@@ -6,7 +6,14 @@ function amp150 = interfaceFiltre150Hz(signal)
 %
 % Sortie:
 %   amp150: Amplitude du signal filtré à 150Hz [double]
-
+    
+    % Augmentation de la taille de l'échantillon de 30Hz envoyé en réplicant le signal 20 fois 
+    % On réduit ainsi l'imprécision 
+    for i = 1:20
+        duplicateSignal(50*(i-1)+1:50*i) = signal;  
+    end
+    
+    
     % Fonction de filtre passe-bande à 150Hz réaliser sous FilterDesign 
     Fs = 1500;  % Sampling Frequency
 
@@ -25,6 +32,6 @@ function amp150 = interfaceFiltre150Hz(signal)
                0], [Wstop1 Wpass Wstop2], {dens});
     Hd = dfilt.dffir(b);
     
-    signal150 = filter(b,1,signal);  % Signal filtre a 150Hz
+    signal150 = filter(b,1,duplicateSignal);  % Signal filtre a 150Hz
     amp150 = peak2peak(signal150)/2; % Amplitude du signal à 150Hz
 end
