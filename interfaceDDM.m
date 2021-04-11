@@ -11,12 +11,14 @@ function [deviation,ddm] = interfaceDDM(amp90, amp150)
 % Sortie:
 %   ddm: signal d'écart entre les deux ondes porteuses [double]
 %   deviation: deviation de l'avion [string]
+
+    % [LLR5]
     ddm = (amp150 - amp90)/(amp150 + amp90); % difference des pourcentage d'amplitude
     ddm = round(ddm,3,'significant');        % 3 chiffres significatifs
-    ddm = single(ddm);                       % format single 32 bit;
-    
+    ddm = single(ddm);                       % format single 32 bit; 
     deviation = calculateDeviation(ddm);
     
+    % [LLR7]
     %sauvegarde ddm dans le fichier ascii 'ddm.txt'
     ddmAscii = num2str(ddm);
     fid = fopen('ddm.txt','wt');
@@ -38,6 +40,8 @@ function deviation = calculateDeviation(ddm)
         %
         % Sortie:
         %   deviation: deviation de l'avion [string]
+        
+        % [LLR6]
         if (ddm > -0.0155 && ddm < 0.0155)
             deviation = "centré"; % 90Hz = 150Hz : L'avion est sur l'axe d'approche
         elseif (ddm < -0.0155)

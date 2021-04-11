@@ -1,11 +1,12 @@
 function data = interfaceInput()
-%% interfaceInput.m
+%% interfaceInput.m 
 % Retourne le signal reçu representant 
-% 50 échantillons de 30Hz échantillonés à 1500Hz 
+% 50 échantillons de 30Hz échantillonés à 1500Hz
 %
 % Sortie:
 %   data: signal recu [single array 1x51]
     filename = "data.mat";
+    % [LLR1]
     if exist(filename, 'file')
          % Fichier data.mat existe.
          data = importdata("data.mat");
@@ -18,7 +19,8 @@ function data = interfaceInput()
          data = zeros([51,x]); % signal vide renvoye
     end
     
-    %Production d'un graphique de l'échantillon
+    % Production d'un graphique de l'échantillon 
+    % [LLR2]
     fs = 1500;       % Fréquence d'échantillonnage de 1500Hz
     freqMod = 30;    % Fréquence du modèle à 30Hz
     t = 0:1/fs:(1/freqMod-1/fs); % Temps d'échantillonnage augmenté

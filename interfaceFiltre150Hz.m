@@ -7,6 +7,7 @@ function amp150 = interfaceFiltre150Hz(signal)
 % Sortie:
 %   amp150: Amplitude du signal filtré à 150Hz [double]
     
+    % [LLR3]
     % Augmentation de la taille de l'échantillon de 30Hz envoyé en réplicant le signal 20 fois 
     % On réduit ainsi l'imprécision 
     for i = 1:20
@@ -32,6 +33,7 @@ function amp150 = interfaceFiltre150Hz(signal)
                0], [Wstop1 Wpass Wstop2], {dens});
     Hd = dfilt.dffir(b);
     
+    % [LLR3] [LLR4]
     signal150 = filter(b,1,duplicateSignal);  % Signal filtre a 150Hz
     amp150 = peak2peak(signal150)/2; % Amplitude du signal à 150Hz
 end

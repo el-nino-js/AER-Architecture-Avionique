@@ -13,6 +13,7 @@
 % Auteur : Nuno Silva-Pinto.      
 % Revu par: El Mahdi Erriq.
 %
+% Compatible avec les versions Matlab 2017b et supérieur
 % Date de création: 27 mars 2021. 
 % Modifié le: 4 avril 2021.
 
@@ -20,21 +21,21 @@
 clear all;
 clc;
 
-%% Interface d'entrée
+%% Interface d'entrée [LLR1] [LLR2]
 signal = interfaceInput();
 
-%% Interface du filtre 90Hz et 150Hz
+%% Interface du filtre 90Hz et 150Hz [LLR3] [LLR4]
 amp90 = interfaceFiltre90Hz(signal);
 amp150 = interfaceFiltre150Hz(signal);
 
-%% Interface DDM
+%% Interface DDM [LLR5] [LLR6]
 [deviation,ddm] = interfaceDDM(amp90, amp150);
 
-%% Interface du drapeau de validité
+%% Interface du drapeau de validité [LLR8]
 flag = interfaceFlag(amp90, amp150);
 
-%% Affichage
-disp("ddm: " + ddm);
+%% Affichage [LLR7] [LLR9]
+disp(['ddm: ', num2str(ddm)]);
 dispDeviation = strcat("deviation: ",deviation);
 disp(dispDeviation);
-disp("flag: " + flag);
+disp(['flag: ', num2str(flag)]);

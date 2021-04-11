@@ -17,6 +17,8 @@ function [flag] = interfaceFlag(amp90, amp150)
     %   - La profondeur de modulation<70% de la valeur nominale  
     %   - Perte de sensibilité  
     %   - Erreur BIT (Built-in test)
+    
+    % [LLR8]
     sum = amp150 + amp90; % somme des differences de pourcentage d'amplitude
     if (sum >= 0.4000)
         flag = false;

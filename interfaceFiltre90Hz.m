@@ -31,6 +31,7 @@ function amp90 = interfaceFiltre90Hz(signal)
                0], [Wstop1 Wpass Wstop2], {dens});
     Hd = dfilt.dffir(b);
     
+    % [LLR3] [LLR4]
     signal90 = filter(b,1,duplicateSignal); % Signal filtre a 90Hz
     amp90 = peak2peak(signal90)/2; % Amplitude du signal à 90Hz
 end
