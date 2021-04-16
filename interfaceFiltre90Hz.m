@@ -7,12 +7,6 @@ function amp90 = interfaceFiltre90Hz(signal)
 % Sortie:
 %   amp90: Amplitude du signal filtre à 90Hz [double]
     
-    % Augmentation de la taille de l'échantillon de 30Hz envoyé en réplicant le signal 20 fois 
-    % On réduit ainsi l'imprécision 
-    for i = 1:20
-        duplicateSignal(50*(i-1)+1:50*i) = signal;  
-    end
-    
     % Fonction de filtre passe-bande à 90Hz réaliser sous FilterDesign 
     Fs = 1500;  % Sampling Frequency
 
@@ -32,6 +26,6 @@ function amp90 = interfaceFiltre90Hz(signal)
     Hd = dfilt.dffir(b);
     
     % [LLR3] [LLR4]
-    signal90 = filter(b,1,duplicateSignal); % Signal filtre a 90Hz
+    signal90 = filter(b,1,signal); % Signal filtre à 90Hz
     amp90 = peak2peak(signal90)/2; % Amplitude du signal à 90Hz
 end

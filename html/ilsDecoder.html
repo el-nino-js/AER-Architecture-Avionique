@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>ilsDecoder.m  (Version C)</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-04-04"><meta name="DC.source" content="ilsDecoder.m"><style type="text/css">
+      --><title>ilsDecoder.m  (Version C)</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-04-11"><meta name="DC.source" content="ilsDecoder.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -66,21 +66,20 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>ilsDecoder.m  (Version C)</h1><!--introduction--><p>Ce programme lit le fichier data.mat &eacute;tant un &eacute;chantillon de 50 points d'un signal modul&eacute; de 1500Hz &agrave; une fr&eacute;quence de 30Hz. Le signal passe par un d&eacute;codeur ILS et retourne en sortie trois fichiers *.txt contenant:</p><div><ol><li>ddm.txt: La DDM (Differential Depth of Modulation)</li><li>deviation.txt: La d&eacute;viation de l'avion</li><li>flag: Le drapeau de validit&eacute;</li></ol></div><p>Un fichier data.mat est requis dans le m&ecirc;me dossier.</p><p>Auteur : Nuno Silva-Pinto. Revu par: El Mahdi Erriq.</p><p>Date de cr&eacute;ation: 27 mars 2021. Modifi&eacute; le: 4 avril 2021.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Clear all previous commands</a></li><li><a href="#2">Interface d'entr&eacute;e</a></li><li><a href="#3">Interface du filtre 90Hz et 150Hz</a></li><li><a href="#4">Interface DDM</a></li><li><a href="#5">Interface du drapeau de validit&eacute;</a></li><li><a href="#6">Affichage</a></li></ul></div><h2 id="1">Clear all previous commands</h2><pre class="codeinput">clear <span class="string">all</span>;
+  </style></head><body><div class="content"><h1>ilsDecoder.m  (Version C)</h1><!--introduction--><p>Ce programme lit le fichier data.mat &eacute;tant un &eacute;chantillon de 50 points d'un signal modul&eacute; de 1500Hz &agrave; une fr&eacute;quence de 30Hz. Le signal passe par un d&eacute;codeur ILS et retourne en sortie trois fichiers *.txt contenant:</p><div><ol><li>ddm.txt: La DDM (Differential Depth of Modulation)</li><li>deviation.txt: La d&eacute;viation de l'avion</li><li>flag: Le drapeau de validit&eacute;</li></ol></div><p>Un fichier data.mat est requis dans le m&ecirc;me dossier.</p><p>Auteur : Nuno Silva-Pinto. Revu par: El Mahdi Erriq.</p><p>Compatible avec les versions Matlab 2017b et sup&eacute;rieur Date de cr&eacute;ation: 27 mars 2021. Modifi&eacute; le: 4 avril 2021.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Clear all previous commands</a></li><li><a href="#2">Interface d'entr&eacute;e [LLR1] [LLR2]</a></li><li><a href="#3">Interface du filtre 90Hz et 150Hz [LLR3] [LLR4]</a></li><li><a href="#4">Interface DDM [LLR5] [LLR6]</a></li><li><a href="#5">Interface du drapeau de validit&eacute; [LLR8]</a></li><li><a href="#6">Affichage [LLR7] [LLR9]</a></li></ul></div><h2 id="1">Clear all previous commands</h2><pre class="codeinput">clear <span class="string">all</span>;
 clc;
-</pre><h2 id="2">Interface d'entr&eacute;e</h2><pre class="codeinput">signal = interfaceInput();
-</pre><img vspace="5" hspace="5" src="ilsDecoder_01.png" alt=""> <h2 id="3">Interface du filtre 90Hz et 150Hz</h2><pre class="codeinput">amp90 = interfaceFiltre90Hz(signal);
+</pre><h2 id="2">Interface d'entr&eacute;e [LLR1] [LLR2]</h2><pre class="codeinput">signal = interfaceInput();
+</pre><img vspace="5" hspace="5" src="ilsDecoder_01.png" alt=""> <h2 id="3">Interface du filtre 90Hz et 150Hz [LLR3] [LLR4]</h2><pre class="codeinput">amp90 = interfaceFiltre90Hz(signal);
 amp150 = interfaceFiltre150Hz(signal);
-</pre><pre class="codeoutput">    1.1005
-
-</pre><h2 id="4">Interface DDM</h2><pre class="codeinput">[deviation,ddm] = interfaceDDM(amp90, amp150);
-</pre><h2 id="5">Interface du drapeau de validit&eacute;</h2><pre class="codeinput">flag = interfaceFlag(amp90, amp150);
-</pre><h2 id="6">Affichage</h2><pre class="codeinput">disp(<span class="string">"ddm: "</span> + ddm);
-disp(<span class="string">"deviation: "</span> + deviation);
-disp(<span class="string">"flag: "</span> + flag);
+</pre><h2 id="4">Interface DDM [LLR5] [LLR6]</h2><pre class="codeinput">[deviation,ddm] = interfaceDDM(amp90, amp150);
+</pre><h2 id="5">Interface du drapeau de validit&eacute; [LLR8]</h2><pre class="codeinput">flag = interfaceFlag(amp90, amp150);
+</pre><h2 id="6">Affichage [LLR7] [LLR9]</h2><pre class="codeinput">disp([<span class="string">'ddm: '</span>, num2str(ddm)]);
+dispDeviation = strcat(<span class="string">"deviation: "</span>,deviation);
+disp(dispDeviation);
+disp([<span class="string">'flag: '</span>, num2str(flag)]);
 </pre><pre class="codeoutput">ddm: -0.0137
 deviation: centr&eacute;
-flag: false
+flag: 0
 </pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% ilsDecoder.m  (Version C)                                                      
@@ -98,6 +97,7 @@ flag: false
 % Auteur : Nuno Silva-Pinto.      
 % Revu par: El Mahdi Erriq.
 %
+% Compatible avec les versions Matlab 2017b et supérieur
 % Date de création: 27 mars 2021. 
 % Modifié le: 4 avril 2021.
 
@@ -105,22 +105,23 @@ flag: false
 clear all;
 clc;
 
-%% Interface d'entrée
+%% Interface d'entrée [LLR1] [LLR2]
 signal = interfaceInput();
 
-%% Interface du filtre 90Hz et 150Hz
+%% Interface du filtre 90Hz et 150Hz [LLR3] [LLR4]
 amp90 = interfaceFiltre90Hz(signal);
 amp150 = interfaceFiltre150Hz(signal);
 
-%% Interface DDM
+%% Interface DDM [LLR5] [LLR6]
 [deviation,ddm] = interfaceDDM(amp90, amp150);
 
-%% Interface du drapeau de validité
+%% Interface du drapeau de validité [LLR8]
 flag = interfaceFlag(amp90, amp150);
 
-%% Affichage
-disp("ddm: " + ddm);
-disp("deviation: " + deviation);
-disp("flag: " + flag);
+%% Affichage [LLR7] [LLR9]
+disp(['ddm: ', num2str(ddm)]);
+dispDeviation = strcat("deviation: ",deviation);
+disp(dispDeviation);
+disp(['flag: ', num2str(flag)]);
 ##### SOURCE END #####
 --></body></html>
